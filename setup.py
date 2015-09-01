@@ -38,7 +38,7 @@ if sys.version_info < (3, ):
 
 
 setuptools.setup(
-    name='setupext-gitversion',
+    name='setupext-gitversion+sqsp',
     version=gitversion.__version__ + local_id,
     author='Dave Shawley',
     author_email='daveshawley@gmail.com',

@@ -23,6 +23,7 @@ class GitVersion(cmd.Command):
 
     def initialize_options(self):
         self.version_file = None
+        self.previous_release_file = None
         self.committish = False
 
     def finalize_options(self):  # pragma: no cover
@@ -31,18 +32,12 @@ class GitVersion(cmd.Command):
     def run(self):
         version = packaging.version.parse(self.distribution.metadata.version)
         public_version, _ = _partition_version(version.public.split('.'))
-        starting_rev = public_version
+        with open(self.previous_release_file, 'r') as inp:
+            prev_version = packaging.version.parse(inp.readline().strip())
+        starting_rev = prev_version
         last_commit = None
 
         local_version = []
-        lines = self._run_git('rev-list', '--merges',
-                              '{0}...HEAD'.format(starting_rev))
-        self.debug('found {0} merges since tag {1}', len(lines), starting_rev)
-        if lines:
-            local_version.append('post{0}'.format(len(lines)))
-            starting_rev = lines[0]
-            last_commit = lines[0]
-
         lines = self._run_git('rev-list', '--first-parent',
                               '{0}...HEAD'.format(starting_rev))
         self.debug('found {0} commits since {1}', len(lines), starting_rev)
