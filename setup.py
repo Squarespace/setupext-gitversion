@@ -38,8 +38,8 @@ if sys.version_info < (3, ):
 
 
 setuptools.setup(
-    name='setupext-gitversion+sqsp',
-    version=gitversion.__version__ + local_id,
+    name='setupext-gitversion',
+    version='1.1.0+sqsp',
     author='Dave Shawley',
     author_email='daveshawley@gmail.com',
     url='http://github.com/dave-shawley/setupext-gitversion',
@@ -66,6 +66,7 @@ setuptools.setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Framework :: Setuptools Plugin',
         'Development Status :: 4 - Beta',
+        'Private :: Do Not Upload',
     ],
     entry_points={
         'distutils.commands': [
